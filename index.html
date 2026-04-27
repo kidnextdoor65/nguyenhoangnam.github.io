@@ -63,20 +63,14 @@
     </section>
 
     <section id="story" class="py-24 px-6 max-w-7xl mx-auto">
-        <div class="flex flex-col md:flex-row items-center gap-16">
-            <div class="w-full md:w-1/2 relative">
-                <div class="absolute -inset-4 border-2 border-primary rounded-lg transform translate-x-4 translate-y-4 -z-10"></div>
-                <img src="image/axe.png?q=80&w=1000&auto=format&fit=crop" alt="AXE Lifestyle" class="w-full rounded-lg shadow-2xl grayscale hover:grayscale-0 transition-all duration-700">
-            </div>
-            <div class="w-full md:w-1/2">
-                <h2 class="text-sm font-bold text-primary uppercase tracking-widest mb-2">Ra đời tại Pháp (1983)</h2>
-                <h3 class="text-4xl font-black uppercase mb-6 leading-tight text-white">Sự Tự Tin Là <br>Vũ Khí Sắc Bén Nhất</h3>
-                <p class="text-neutral-400 mb-6 text-lg">Chúng tôi tin rằng sự quyến rũ thực sự của một người đàn ông đến từ sự tự tin vào chính bản thân mình. Không cần phải cố gắng trở thành một ai khác.</p>
-                <p class="text-neutral-400 mb-8 text-lg">AXE đồng hành cùng bạn trong hành trình phá vỡ những định kiến, thể hiện cá tính riêng và làm chủ mọi cuộc chơi. Bạn chỉ cần là chính bạn, phần còn lại hãy để AXE lo.</p>
-                <a href="shopping.html" class="inline-flex items-center gap-2 text-primary font-bold uppercase hover:text-white transition-colors border-b border-primary pb-1">
-                    Khám phá bộ sưu tập <i class="fa-solid fa-arrow-right"></i>
-                </a>
-            </div>
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-sm font-bold text-primary uppercase tracking-widest mb-4">Ra đời tại Pháp (1983)</h2>
+            <h3 class="text-4xl md:text-5xl font-black uppercase mb-8 leading-tight text-white">Sự Tự Tin Là Vũ Khí Sắc Bén Nhất</h3>
+            <p class="text-neutral-400 mb-6 text-lg leading-relaxed">Chúng tôi tin rằng sự quyến rũ thực sự của một người đàn ông đến từ sự tự tin vào chính bản thân mình. Không cần phải cố gắng trở thành một ai khác.</p>
+            <p class="text-neutral-400 mb-10 text-lg leading-relaxed">AXE đồng hành cùng bạn trong hành trình phá vỡ những định kiến, thể hiện cá tính riêng và làm chủ mọi cuộc chơi. Bạn chỉ cần là chính bạn, phần còn lại hãy để AXE lo.</p>
+            <a href="shopping.html" class="inline-flex items-center gap-2 text-primary font-bold uppercase hover:text-white transition-colors border-b border-primary pb-1">
+                Khám phá bộ sưu tập <i class="fa-solid fa-arrow-right"></i>
+            </a>
         </div>
     </section>
 
@@ -227,12 +221,11 @@
         let cart = JSON.parse(localStorage.getItem('axeCart')) || [];
         function saveCart() { localStorage.setItem('axeCart', JSON.stringify(cart)); }
 
-        // Chọn lọc 4 sản phẩm tiêu biểu cho trang chủ (Đại diện cho các phân khúc giá)
         const featuredProducts = [
-            { id: 1, name: "AXE Dark Temptation", price: 95000, oldPrice: 120000, badge: "HOT", img: "link_anh_1.jpg", desc: "Bản Tiêu Chuẩn - Hương Sô-cô-la đen" },
-            { id: 2, name: "AXE Apollo", price: 95000, oldPrice: 120000, badge: "", img: "link_anh_2.jpg", desc: "Bản Tiêu Chuẩn - Hương Gỗ Đàn Hương" },
-            { id: 9, name: "AXE Ice Chill", price: 105000, oldPrice: 135000, badge: "COOL", img: "link_anh_9.jpg", desc: "Bản Tươi Mát - Bạc Hà & Chanh Tuyết" },
-            { id: 21, name: "AXE Aqua Bergamot", price: 125000, oldPrice: 165000, badge: "PREMIUM", img: "link_anh_21.jpg", desc: "Fine Fragrance - Tinh dầu Bergamot" }
+            { id: 1, name: "AXE Dark Temptation", price: 95000, oldPrice: 120000, badge: "HOT", img: "image/1.webp", desc: "Bản Tiêu Chuẩn - Hương Sô-cô-la đen" },
+            { id: 2, name: "AXE Apollo", price: 95000, oldPrice: 120000, badge: "", img: "image/2.webp", desc: "Bản Tiêu Chuẩn - Hương Gỗ Đàn Hương & Xô thơm" },
+            { id: 9, name: "AXE Ice Chill", price: 105000, oldPrice: 135000, badge: "COOL", img: "image/9.webp", desc: "Bản Tươi Mát - Bạc Hà & Chanh Tuyết" },
+            { id: 21, name: "AXE Aqua Bergamot", price: 125000, oldPrice: 165000, badge: "PREMIUM", img: "image/21.webp", desc: "Fine Fragrance - Nước hoa tinh dầu Bergamot" },
         ];
 
         const grid = document.getElementById('featured-products');
