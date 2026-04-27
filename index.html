@@ -1,290 +1,153 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AXE Vietnam | Khẳng Định Bản Lĩnh Phái Mạnh</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&display=swap" rel="stylesheet">
-    <style>
-        :root { --axe-neon: #ccff00; --dark-bg: #050505; --card-bg: #111111; --text-main: #ffffff; }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; scroll-behavior: smooth; }
-        body { background-color: var(--dark-bg); color: var(--text-main); overflow-x: hidden; }
-
-        /* Navbar - 4 Buttons Design */
-        nav { 
-            position: fixed; top: 0; width: 100%; background: rgba(5, 5, 5, 0.95); 
-            backdrop-filter: blur(10px); z-index: 1000; display: flex; 
-            justify-content: space-between; align-items: center; padding: 15px 50px; 
-            border-bottom: 1px solid #222;
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#0a0a0a',
+                        card: '#151515',
+                        neon: '#ccff00'
+                    },
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                    }
+                }
+            }
         }
-        .logo-container img { height: 40px; }
-        .nav-menu { display: flex; gap: 30px; align-items: center; }
-        .nav-btn { 
-            color: #fff; text-decoration: none; font-weight: 600; text-transform: uppercase; 
-            font-size: 0.9em; transition: 0.3s; position: relative; padding: 8px 0;
-        }
-        .nav-btn::after {
-            content: ''; position: absolute; bottom: 0; left: 0; width: 0%; 
-            height: 2px; background: var(--axe-neon); transition: 0.3s;
-        }
-        .nav-btn:hover::after { width: 100%; }
-        .nav-btn:hover { color: var(--axe-neon); }
-        
-        /* Highlight cho nút CV */
-        .btn-cv {
-            border: 1px solid var(--axe-neon); padding: 8px 20px; border-radius: 20px; 
-            color: var(--axe-neon); background: transparent;
-        }
-        .btn-cv:hover { background: var(--axe-neon); color: #000; }
-        .btn-cv::after { display: none; }
-
-        /* Cart Icon */
-        .cart-wrapper { display: flex; align-items: center; gap: 20px; }
-        .cart-icon { font-size: 1.5em; cursor: pointer; position: relative; }
-        .cart-count { 
-            position: absolute; top: -5px; right: -10px; background: var(--axe-neon); 
-            color: #000; font-size: 0.6em; font-weight: 900; padding: 2px 6px; border-radius: 50%; 
-        }
-
-        /* 1. Trang Chủ (Hero Section) */
-        .hero { 
-            height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; 
-            background: linear-gradient(to bottom, rgba(0,0,0,0.4), var(--dark-bg)), url('https://images.unsplash.com/photo-1618331835717-801e976710b2?q=80&w=1920&auto=format&fit=crop') center/cover; 
-            padding-top: 60px; 
-        }
-        .hero h1 { font-size: 4.5em; font-weight: 900; text-transform: uppercase; margin-bottom: 15px; }
-        .hero h1 span { color: var(--axe-neon); }
-        .hero p { font-size: 1.2em; max-width: 600px; margin: 0 auto 30px auto; color: #ccc; line-height: 1.6; }
-        .btn-main { 
-            display: inline-block; padding: 15px 40px; background: var(--axe-neon); color: #000; 
-            font-size: 1.1em; font-weight: 900; text-decoration: none; border-radius: 4px; transition: 0.3s; 
-        }
-        .btn-main:hover { transform: scale(1.05); box-shadow: 0 0 20px rgba(204,255,0,0.4); }
-
-        /* 2. Thương Hiệu (Brand Section) */
-        .brand-section { padding: 100px 20px; background: #0a0a0a; border-bottom: 1px solid #222; }
-        .brand-container { 
-            max-width: 1100px; margin: 0 auto; display: flex; align-items: center; gap: 50px; 
-        }
-        .brand-text { flex: 1; }
-        .brand-text h2 { font-size: 2.5em; font-weight: 900; color: var(--axe-neon); margin-bottom: 20px; text-transform: uppercase; }
-        .brand-text p { font-size: 1.1em; line-height: 1.8; color: #bbb; margin-bottom: 20px; text-align: justify; }
-        .brand-image { flex: 1; position: relative; }
-        .brand-image img { width: 100%; border-radius: 8px; filter: grayscale(20%); transition: 0.5s; }
-        .brand-image img:hover { filter: grayscale(0%); }
-        .tech-box { background: #151515; padding: 20px; border-left: 4px solid var(--axe-neon); margin-top: 30px; }
-        .tech-box h4 { color: #fff; margin-bottom: 10px; font-size: 1.1em; }
-
-        /* 3. Shopping Section */
-        .shopping-section { padding: 100px 20px; max-width: 1200px; margin: 0 auto; text-align: center; }
-        .section-title { font-size: 2.8em; font-weight: 900; margin-bottom: 50px; text-transform: uppercase; }
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
-        .card { 
-            background: var(--card-bg); padding: 30px 20px; border-radius: 8px; border: 1px solid #222; 
-            transition: 0.3s; display: flex; flex-direction: column; justify-content: space-between;
-        }
-        .card:hover { border-color: var(--axe-neon); transform: translateY(-10px); }
-        .card img { width: 100%; height: 200px; object-fit: contain; margin-bottom: 20px; transition: 0.3s; }
-        .card:hover img { transform: scale(1.1); }
-        .card h3 { font-size: 1.3em; margin-bottom: 10px; }
-        .price { font-size: 1.6em; font-weight: 900; color: var(--axe-neon); margin: 15px 0; }
-        .btn-add { 
-            padding: 15px; background: #222; color: #fff; font-weight: 900; border: none; 
-            cursor: pointer; border-radius: 4px; transition: 0.3s; width: 100%; text-transform: uppercase; 
-        }
-        .btn-add:hover { background: var(--axe-neon); color: #000; }
-
-        /* Giỏ hàng CSS (Giữ nguyên như phiên bản trước) */
-        .cart-sidebar { position: fixed; top: 0; right: -400px; width: 350px; max-width: 100%; height: 100vh; background: #111; z-index: 1001; transition: 0.4s; padding: 20px; display: flex; flex-direction: column; border-left: 1px solid #333; }
-        .cart-sidebar.active { right: 0; }
-        .cart-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; padding-bottom: 15px; margin-bottom: 15px; }
-        .close-cart { background: none; border: none; color: #fff; font-size: 1.5em; cursor: pointer; }
-        .cart-items { flex-grow: 1; overflow-y: auto; }
-        .cart-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; background: #1a1a1a; padding: 10px; border-radius: 5px; }
-        .cart-item img { width: 50px; height: 50px; object-fit: contain; }
-        .cart-item-info { flex-grow: 1; margin-left: 10px; }
-        .cart-item-price { color: var(--axe-neon); font-size: 0.9em; font-weight: bold; }
-        .remove-btn { background: #ff3333; color: white; border: none; padding: 5px 8px; border-radius: 3px; cursor: pointer; font-size: 0.8em; }
-        .cart-footer { border-top: 1px solid #333; padding-top: 15px; }
-        .total { display: flex; justify-content: space-between; font-size: 1.2em; font-weight: bold; margin-bottom: 15px; }
-        
-        .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0,0,0,0.5); z-index: 1000; }
-        .overlay.active { display: block; }
-        .checkout-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0,0,0,0.8); z-index: 1002; justify-content: center; align-items: center; }
-        .checkout-content { background: #151515; padding: 30px; border-radius: 8px; width: 400px; max-width: 90%; border: 1px solid var(--axe-neon); }
-        .checkout-content input { width: 100%; padding: 12px; margin-bottom: 15px; background: #222; border: 1px solid #444; color: #fff; border-radius: 4px; }
-
-        @media (max-width: 768px) {
-            .nav-menu { display: none; } /* Có thể làm menu hamburger cho mobile sau */
-            .brand-container { flex-direction: column; }
-            .hero h1 { font-size: 3em; }
-        }
-    </style>
+    </script>
 </head>
-<body>
+<body class="bg-dark text-white font-sans antialiased">
 
-    <nav>
-        <div class="logo-container">
-            <a href="#home"><img src="https://upload.wikimedia.org/wikipedia/commons/b/b3/Axe_logo.svg" alt="AXE Logo"></a>
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-dark/90 backdrop-blur-md border-b border-neutral-800 py-4 px-6 md:px-12 flex justify-between items-center">
+        <a href="#" class="text-2xl font-black tracking-wider flex items-center gap-2">
+            <span class="text-neon text-3xl">/</span>AXE
+        </a>
+        <div class="hidden md:flex gap-8 text-sm font-semibold uppercase tracking-widest">
+            <a href="#home" class="hover:text-neon transition-colors">Trang chủ</a>
+            <a href="#products" class="hover:text-neon transition-colors">Sản phẩm</a>
+            <a href="#about" class="hover:text-neon transition-colors">Về chúng tôi</a>
         </div>
-        
-        <div class="nav-menu">
-            <a href="#home" class="nav-btn">Trang chủ</a>
-            <a href="#brand" class="nav-btn">Thương hiệu</a>
-            <a href="#shopping" class="nav-btn">Shopping</a>
-            <a href="cv.html" class="nav-btn btn-cv">Cá nhân (CV)</a>
-        </div>
-
-        <div class="cart-wrapper">
-            <div class="cart-icon" onclick="toggleCart()">
-                🛒<span class="cart-count" id="cart-counter">0</span>
-            </div>
+        <div class="relative cursor-pointer group" id="cart-btn">
+            <i class="fa-solid fa-cart-shopping text-xl group-hover:text-neon transition-colors"></i>
+            <span id="cart-count" class="absolute -top-2 -right-3 bg-neon text-black text-xs font-black px-1.5 py-0.5 rounded-full">0</span>
         </div>
     </nav>
 
-    <section id="home" class="hero">
-        <div>
-            <h1>Sạch Thơm <span>48 Giờ</span></h1>
-            <p>Đừng để mùi cơ thể cản bước bạn. Tự tin bứt phá giới hạn, khẳng định khí chất phái mạnh với công nghệ xịt khử mùi tiên tiến nhất từ AXE.</p>
-            <a href="#shopping" class="btn-main">MUA NGAY</a>
+    <section id="home" class="relative h-screen flex items-center justify-center text-center px-4 overflow-hidden">
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1618331835717-801e976710b2?q=80&w=1920&auto=format&fit=crop')] bg-cover bg-center opacity-40"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent to-dark"></div>
+        <div class="relative z-10 max-w-4xl">
+            <h1 class="text-5xl md:text-7xl font-black uppercase mb-6 leading-tight">
+                Sạch Thơm <span class="text-neon text-transparent bg-clip-text bg-gradient-to-r from-neon to-green-400">48 Giờ</span>
+            </h1>
+            <p class="text-lg md:text-xl text-gray-300 mb-10 max-w-2xl mx-auto font-medium">
+                Công nghệ Zinc Neodecanoate tiên tiến. Khô thoáng tuyệt đối, tự tin bứt phá giới hạn và làm chủ mọi cuộc chơi.
+            </p>
+            <a href="#products" class="inline-block bg-neon text-black font-black uppercase tracking-widest px-10 py-4 rounded hover:bg-white hover:scale-105 transition-all duration-300 shadow-[0_0_20px_rgba(204,255,0,0.3)]">
+                Khám Phá Ngay
+            </a>
         </div>
     </section>
 
-    <section id="brand" class="brand-section">
-        <div class="brand-container">
-            <div class="brand-text">
-                <h2>Bản Lĩnh Không Thỏa Hiệp</h2>
-                <p>Ra mắt lần đầu tiên tại Pháp vào năm 1983, AXE đã nhanh chóng trở thành thương hiệu mùi hương nam giới bán chạy số 1 toàn cầu. Chúng tôi tin rằng sự quyến rũ lớn nhất của một người đàn ông chính là sự tự tin vào bản thân mình.</p>
-                <p>Với các chuyên gia điều hương hàng đầu thế giới, AXE mang đến những nốt hương tinh tế, đẳng cấp, thay thế hoàn toàn nước hoa đắt tiền mà vẫn duy trì sự khô thoáng tuyệt đối.</p>
-                
-                <div class="tech-box">
-                    <h4>🧪 Công nghệ Zinc Neodecanoate</h4>
-                    <p style="font-size: 0.95em; color: #aaa; margin: 0;">Khác với các sản phẩm thông thường chỉ "lấy mùi chèn mùi", công nghệ tiên tiến của AXE trực tiếp tiêu diệt vi khuẩn gây mùi, bảo vệ bạn suốt 48 giờ liên tục và tuyệt đối không để lại vệt trắng ố vàng trên áo sơ mi.</p>
+    <section id="products" class="py-24 px-6 md:px-12 max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-black uppercase tracking-wider mb-4">Sản Phẩm <span class="text-neon">Nổi Bật</span></h2>
+            <div class="h-1 w-24 bg-neon mx-auto"></div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="product-card group bg-card p-6 rounded-lg border border-neutral-800 hover:border-neon transition-all duration-300 relative overflow-hidden flex flex-col justify-between h-full">
+                <div>
+                    <div class="absolute top-4 right-4 bg-neon text-black text-xs font-black px-2 py-1 uppercase rounded">Hot</div>
+                    <img src="https://www.axe.com/content/dam/unilever/axe/vietnam/pack_shot/8934839154724-1215168-png.png" alt="AXE Dark Temptation" class="w-full h-48 object-contain mb-6 group-hover:scale-110 transition-transform duration-500">
+                    <h3 class="text-xl font-bold mb-2">Dark Temptation</h3>
+                    <p class="text-sm text-gray-400 mb-4 h-10">Hương Sô-cô-la đen ngọt ngào, quyến rũ.</p>
+                </div>
+                <div>
+                    <div class="text-2xl font-black text-neon mb-6">95.000₫</div>
+                    <button class="w-full bg-neutral-800 text-white font-bold py-3 uppercase rounded hover:bg-neon hover:text-black transition-colors add-to-cart-btn">Thêm vào giỏ</button>
                 </div>
             </div>
-            <div class="brand-image">
-                <img src="https://images.unsplash.com/photo-1520699049698-acd2fce18736?q=80&w=1000&auto=format&fit=crop" alt="AXE Brand Lifestyle">
+
+            <div class="product-card group bg-card p-6 rounded-lg border border-neutral-800 hover:border-neon transition-all duration-300 flex flex-col justify-between h-full">
+                <div>
+                    <img src="https://www.axe.com/content/dam/unilever/axe/vietnam/pack_shot/8934839154687-1215160-png.png" alt="AXE Apollo" class="w-full h-48 object-contain mb-6 group-hover:scale-110 transition-transform duration-500">
+                    <h3 class="text-xl font-bold mb-2">AXE Apollo</h3>
+                    <p class="text-sm text-gray-400 mb-4 h-10">Mùi hương nam tính, cổ điển từ Gỗ đàn hương.</p>
+                </div>
+                <div>
+                    <div class="text-2xl font-black text-neon mb-6">95.000₫</div>
+                    <button class="w-full bg-neutral-800 text-white font-bold py-3 uppercase rounded hover:bg-neon hover:text-black transition-colors add-to-cart-btn">Thêm vào giỏ</button>
+                </div>
+            </div>
+
+            <div class="product-card group bg-card p-6 rounded-lg border border-neutral-800 hover:border-neon transition-all duration-300 flex flex-col justify-between h-full">
+                <div>
+                    <img src="https://www.axe.com/content/dam/unilever/axe/vietnam/pack_shot/8934839154748-1215171-png.png" alt="AXE Ice Chill" class="w-full h-48 object-contain mb-6 group-hover:scale-110 transition-transform duration-500">
+                    <h3 class="text-xl font-bold mb-2">AXE Ice Chill</h3>
+                    <p class="text-sm text-gray-400 mb-4 h-10">Bảo vệ tuyệt đối, khô thoáng tức thì sau những set tập cường độ cao.</p>
+                </div>
+                <div>
+                    <div class="text-2xl font-black text-neon mb-6">95.000₫</div>
+                    <button class="w-full bg-neutral-800 text-white font-bold py-3 uppercase rounded hover:bg-neon hover:text-black transition-colors add-to-cart-btn">Thêm vào giỏ</button>
+                </div>
+            </div>
+
+            <div class="product-card group bg-card p-6 rounded-lg border border-neutral-800 hover:border-neon transition-all duration-300 flex flex-col justify-between h-full">
+                <div>
+                    <img src="https://www.axe.com/content/dam/unilever/axe/vietnam/pack_shot/8934839154700-1215164-png.png" alt="AXE Black" class="w-full h-48 object-contain mb-6 group-hover:scale-110 transition-transform duration-500">
+                    <h3 class="text-xl font-bold mb-2">AXE Black</h3>
+                    <p class="text-sm text-gray-400 mb-4 h-10">Hương Cam Bergamot lịch lãm, tinh tế.</p>
+                </div>
+                <div>
+                    <div class="text-2xl font-black text-neon mb-6">95.000₫</div>
+                    <button class="w-full bg-neutral-800 text-white font-bold py-3 uppercase rounded hover:bg-neon hover:text-black transition-colors add-to-cart-btn">Thêm vào giỏ</button>
+                </div>
             </div>
         </div>
     </section>
 
-    <section id="shopping" class="shopping-section">
-        <h2 class="section-title">AXE STORE</h2>
-        <div class="product-grid" id="product-list">
+    <footer id="about" class="bg-[#050505] border-t border-neutral-900 pt-16 pb-8 px-6 md:px-12 mt-12">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+            <div>
+                <a href="#" class="text-2xl font-black tracking-wider flex items-center gap-2 mb-6">
+                    <span class="text-neon text-3xl">/</span>AXE
+                </a>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                    Hương nước hoa đẳng cấp, không thỏa hiệp. Phân phối chính hãng các dòng sản phẩm chăm sóc cá nhân dành riêng cho phái mạnh tại Việt Nam.
+                </p>
             </div>
-    </section>
-
-    <div class="overlay" id="overlay" onclick="toggleCart()"></div>
-    
-    <div class="cart-sidebar" id="cart-sidebar">
-        <div class="cart-header">
-            <h2>GIỎ HÀNG</h2>
-            <button class="close-cart" onclick="toggleCart()">✖</button>
+            <div>
+                <h4 class="text-lg font-bold mb-6 uppercase tracking-wider">Đăng ký nhận tin</h4>
+                <div class="flex">
+                    <input type="email" placeholder="Email của bạn" class="bg-neutral-900 text-white border border-neutral-700 px-4 py-3 w-full rounded-l focus:outline-none focus:border-neon">
+                    <button class="bg-neon text-black font-bold px-6 py-3 rounded-r hover:bg-white transition-colors">Gửi</button>
+                </div>
+            </div>
+            <div>
+                <h4 class="text-lg font-bold mb-6 uppercase tracking-wider">Kết nối</h4>
+                <div class="flex gap-4">
+                    <a href="#" class="w-10 h-10 rounded-full bg-neutral-900 flex items-center justify-center hover:bg-neon hover:text-black transition-colors"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-neutral-900 flex items-center justify-center hover:bg-neon hover:text-black transition-colors"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-neutral-900 flex items-center justify-center hover:bg-neon hover:text-black transition-colors"><i class="fa-brands fa-tiktok"></i></a>
+                </div>
+            </div>
         </div>
-        <div class="cart-items" id="cart-items"></div>
-        <div class="cart-footer">
-            <div class="total"><span>Tổng cộng:</span> <span id="cart-total">0₫</span></div>
-            <button class="btn-add" style="background: var(--axe-neon); color: #000;" onclick="openCheckout()">TIẾN HÀNH THANH TOÁN</button>
+        <div class="text-center text-gray-600 text-sm border-t border-neutral-900 pt-8">
+            &copy; 2026 AXE Store. All rights reserved. Code with 🖤.
         </div>
-    </div>
-
-    <div class="checkout-modal" id="checkout-modal">
-        <div class="checkout-content">
-            <h2 style="margin-bottom: 20px; color: var(--axe-neon);">Xác nhận Đơn hàng</h2>
-            <input type="text" id="cus-name" placeholder="Họ và tên" required>
-            <input type="text" id="cus-phone" placeholder="Số điện thoại" required>
-            <input type="text" id="cus-address" placeholder="Địa chỉ nhận hàng" required>
-            <button class="btn-add" style="background: var(--axe-neon); color: #000; margin-bottom: 10px;" onclick="submitOrder()">ĐẶT HÀNG NGAY</button>
-            <button class="btn-add" style="background: #333;" onclick="closeCheckout()">HỦY BỎ</button>
-        </div>
-    </div>
-
-    <footer style="text-align: center; padding: 30px; border-top: 1px solid #222; font-size: 0.9em; color: #777;">
-        &copy; 2026 AXE Vietnam. <br>Được thiết kế và quản lý bởi Nguyễn Hoàng Nam.
     </footer>
 
-    <script>
-        const products = [
-            { id: 1, name: "AXE Apollo", price: 95000, img: "https://www.axe.com/content/dam/unilever/axe/vietnam/pack_shot/8934839154687-1215160-png.png", desc: "Hương Gỗ Đàn Hương & Xô Thơm" },
-            { id: 2, name: "AXE Dark Temptation", price: 95000, img: "https://www.axe.com/content/dam/unilever/axe/vietnam/pack_shot/8934839154724-1215168-png.png", desc: "Hương Sô-cô-la Đen Quyến Rũ" },
-            { id: 3, name: "AXE Black", price: 95000, img: "https://www.axe.com/content/dam/unilever/axe/vietnam/pack_shot/8934839154700-1215164-png.png", desc: "Hương Cam Bergamot & Tuyết Tùng" },
-            { id: 4, name: "AXE Ice Chill", price: 95000, img: "https://www.axe.com/content/dam/unilever/axe/vietnam/pack_shot/8934839154748-1215171-png.png", desc: "Hương Bạc Hà & Chanh Tuyết" },
-            { id: 5, name: "AXE Gold Temptation", price: 95000, img: "https://www.axe.com/content/dam/unilever/axe/vietnam/pack_shot/8934839154762-1215175-png.png", desc: "Hương Cam Citrus & Hổ Phách" },
-            { id: 6, name: "AXE Click", price: 95000, img: "https://www.axe.com/content/dam/unilever/axe/global/pack_shot/8717163693245.png", desc: "Hương Gia Vị & Gỗ Ấm" }
-        ];
-
-        let cart = [];
-
-        // Hiển thị sản phẩm
-        const productList = document.getElementById('product-list');
-        products.forEach(p => {
-            productList.innerHTML += `
-                <div class="card">
-                    <div>
-                        <img src="${p.img}" alt="${p.name}">
-                        <h3>${p.name}</h3>
-                        <p style="color: #888; font-size: 0.9em; margin-bottom: 10px;">${p.desc}</p>
-                    </div>
-                    <div>
-                        <div class="price">${p.price.toLocaleString('vi-VN')}₫</div>
-                        <button class="btn-add" onclick="addToCart(${p.id})">THÊM VÀO GIỎ</button>
-                    </div>
-                </div>
-            `;
-        });
-
-        // Chức năng giỏ hàng
-        function addToCart(id) {
-            const product = products.find(p => p.id === id);
-            const existingItem = cart.find(item => item.id === id);
-            if(existingItem) { existingItem.qty += 1; } 
-            else { cart.push({ ...product, qty: 1 }); }
-            updateCartUI();
-            document.getElementById('cart-sidebar').classList.add('active');
-            document.getElementById('overlay').classList.add('active');
-        }
-
-        function updateCartUI() {
-            const cartItems = document.getElementById('cart-items');
-            cartItems.innerHTML = '';
-            let total = 0, count = 0;
-            cart.forEach((item, index) => {
-                total += item.price * item.qty;
-                count += item.qty;
-                cartItems.innerHTML += `
-                    <div class="cart-item">
-                        <img src="${item.img}" alt="${item.name}">
-                        <div class="cart-item-info">
-                            <div style="font-size: 0.9em; font-weight: bold;">${item.name} (x${item.qty})</div>
-                            <div class="cart-item-price">${(item.price * item.qty).toLocaleString('vi-VN')}₫</div>
-                        </div>
-                        <button class="remove-btn" onclick="removeItem(${index})">Xóa</button>
-                    </div>
-                `;
-            });
-            document.getElementById('cart-total').innerText = total.toLocaleString('vi-VN') + '₫';
-            document.getElementById('cart-counter').innerText = count;
-        }
-
-        function removeItem(index) { cart.splice(index, 1); updateCartUI(); }
-        function toggleCart() {
-            document.getElementById('cart-sidebar').classList.toggle('active');
-            document.getElementById('overlay').classList.toggle('active');
-        }
-        function openCheckout() {
-            if(cart.length === 0) return alert("Giỏ hàng đang trống!");
-            toggleCart(); document.getElementById('checkout-modal').style.display = 'flex';
-        }
-        function closeCheckout() { document.getElementById('checkout-modal').style.display = 'none'; }
-        function submitOrder() {
-            const name = document.getElementById('cus-name').value;
-            const phone = document.getElementById('cus-phone').value;
-            const address = document.getElementById('cus-address').value;
-            if(!name || !phone || !address) return alert("Vui lòng điền đủ thông tin!");
-            alert("🎉 Đặt hàng thành công! Cảm ơn " + name);
-            cart = []; updateCartUI(); closeCheckout();
-            document.querySelectorAll('.checkout-content input').forEach(input => input.value = '');
-        }
-    </script>
+    <script src="app.js"></script>
 </body>
 </html>
