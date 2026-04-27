@@ -18,7 +18,6 @@
         }
     </script>
     <style>
-        /* Custom scrollbar cho nền sáng */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #f1f5f9; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
@@ -33,10 +32,10 @@
         <a href="#home" class="text-2xl font-black tracking-wider flex items-center gap-2 text-slate-900">
             <span class="text-primary text-3xl">/</span>AXE
         </a>
-        <div class="hidden md:flex gap-8 text-sm font-semibold uppercase tracking-widest text-slate-600">
+        <div class="hidden md:flex gap-8 text-sm font-bold uppercase tracking-widest text-slate-600">
             <a href="#home" class="hover:text-primary transition-colors">Trang chủ</a>
             <a href="#products" class="hover:text-primary transition-colors">Shopping</a>
-            <a href="cv.html" class="px-4 py-1 border-2 border-primary text-primary rounded-full hover:bg-primary hover:text-white transition-all">Cá nhân (CV)</a>
+            <a href="cv.html" class="hover:text-primary transition-colors">Cá nhân (CV)</a>
         </div>
         <div class="relative group" id="cart-btn">
             <i class="fa-solid fa-cart-shopping text-xl text-slate-700"></i>
@@ -44,19 +43,18 @@
         </div>
     </nav>
 
-    <section id="home" class="relative pt-32 pb-20 px-6 md:px-12 flex flex-col items-center justify-center text-center overflow-hidden bg-white">
-        <div class="relative z-10 max-w-4xl mx-auto mt-10">
-            <h1 class="text-4xl md:text-6xl font-black uppercase mb-6 leading-tight text-slate-900">
+    <section id="home" class="relative pt-40 pb-32 px-6 md:px-12 flex flex-col items-center justify-center text-center overflow-hidden bg-white border-b border-slate-200">
+        <div class="relative z-10 max-w-4xl mx-auto">
+            <h1 class="text-5xl md:text-7xl font-black uppercase mb-6 leading-tight text-slate-900">
                 Sạch Thơm <span class="text-primary">48 Giờ</span>
             </h1>
-            <p class="text-lg md:text-xl text-slate-600 mb-10 max-w-2xl mx-auto">
+            <p class="text-lg md:text-xl text-slate-600 mb-10 max-w-2xl mx-auto font-medium">
                 Công nghệ Zinc Neodecanoate tiên tiến. Không để lại vệt trắng. Tự tin bứt phá giới hạn với hương nước hoa chuẩn phái mạnh.
             </p>
             <a href="#products" class="inline-block bg-primary text-white font-bold uppercase tracking-widest px-10 py-4 rounded hover:bg-secondary transition-all shadow-lg shadow-blue-500/30">
                 Khám Phá Cửa Hàng
             </a>
         </div>
-        <img src="https://images.unsplash.com/photo-1520699049698-acd2fce18736?q=80&w=1000&auto=format&fit=crop" alt="AXE Banner" class="w-full max-w-5xl rounded-2xl shadow-2xl mt-16 object-cover h-64 md:h-96">
     </section>
 
     <section id="products" class="py-24 px-6 md:px-12 max-w-7xl mx-auto">
@@ -72,7 +70,7 @@
             </div>
     </section>
 
-    <footer class="bg-slate-900 text-slate-300 py-12 px-6 text-center border-t border-slate-800 mt-12">
+    <footer class="bg-slate-900 text-slate-300 py-12 px-6 text-center border-t border-slate-800">
         <div class="max-w-4xl mx-auto">
             <h3 class="text-2xl font-black text-white tracking-widest mb-4">AXE VIETNAM</h3>
             <p class="mb-8 text-sm">Hương nước hoa đẳng cấp, bảo vệ 48 giờ. Khẳng định khí chất đàn ông.</p>
@@ -82,6 +80,123 @@
         </div>
     </footer>
 
-    <script src="app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cartCountElement = document.getElementById('cart-count');
+            let cartCount = 0;
+
+            const baseProducts = [
+                { name: "AXE Apollo", price: 95000, img: "https://www.axe.com/content/dam/unilever/axe/vietnam/pack_shot/8934839154687-1215160-png.png", desc: "Hương Gỗ Đàn Hương & Xô Thơm" },
+                { name: "Dark Temptation", price: 95000, img: "https://www.axe.com/content/dam/unilever/axe/vietnam/pack_shot/8934839154724-1215168-png.png", desc: "Hương Sô-cô-la đen ngọt ngào" },
+                { name: "AXE Black", price: 95000, img: "https://www.axe.com/content/dam/unilever/axe/vietnam/pack_shot/8934839154700-1215164-png.png", desc: "Hương Cam Bergamot lịch lãm" },
+                { name: "AXE Ice Chill", price: 95000, img: "https://www.axe.com/content/dam/unilever/axe/vietnam/pack_shot/8934839154748-1215171-png.png", desc: "Hương Bạc Hà & Chanh Tuyết" },
+                { name: "Gold Temptation", price: 95000, img: "https://www.axe.com/content/dam/unilever/axe/vietnam/pack_shot/8934839154762-1215175-png.png", desc: "Hương Cam Citrus & Hổ Phách" },
+                { name: "AXE Click", price: 95000, img: "https://www.axe.com/content/dam/unilever/axe/global/pack_shot/8717163693245.png", desc: "Hương Gia Vị & Gỗ Ấm" }
+            ];
+
+            const products = [];
+            for (let i = 1; i <= 24; i++) {
+                let base = baseProducts[(i - 1) % baseProducts.length];
+                products.push({
+                    id: i,
+                    name: `${base.name} (Vol.${i})`,
+                    price: base.price,
+                    img: base.img,
+                    desc: base.desc
+                });
+            }
+
+            const itemsPerPage = 8;
+            let currentPage = 1;
+            const totalPages = Math.ceil(products.length / itemsPerPage);
+
+            const productGrid = document.getElementById('product-grid');
+            const paginationContainer = document.getElementById('pagination');
+
+            function renderProducts(page) {
+                productGrid.innerHTML = '';
+                const startIndex = (page - 1) * itemsPerPage;
+                const endIndex = startIndex + itemsPerPage;
+                const currentProducts = products.slice(startIndex, endIndex);
+
+                currentProducts.forEach(product => {
+                    const card = document.createElement('div');
+                    card.className = "bg-white p-6 rounded-xl border border-slate-200 hover:border-primary transition-all duration-300 shadow-sm hover:shadow-xl flex flex-col justify-between group";
+                    card.innerHTML = `
+                        <div>
+                            <img src="${product.img}" alt="${product.name}" class="w-full h-48 object-contain mb-6 group-hover:scale-105 transition-transform duration-500">
+                            <h3 class="text-lg font-bold mb-1 text-slate-800">${product.name}</h3>
+                            <p class="text-sm text-slate-500 mb-4 h-10">${product.desc}</p>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-black text-primary mb-4">${product.price.toLocaleString('vi-VN')}₫</div>
+                            <button class="add-to-cart-btn w-full bg-slate-100 text-slate-800 font-bold py-3 uppercase rounded hover:bg-primary hover:text-white transition-colors border border-slate-200">
+                                Thêm vào giỏ
+                            </button>
+                        </div>
+                    `;
+                    productGrid.appendChild(card);
+                });
+
+                attachCartEvents();
+            }
+
+            function renderPagination() {
+                paginationContainer.innerHTML = '';
+                for (let i = 1; i <= totalPages; i++) {
+                    const btn = document.createElement('button');
+                    btn.innerText = i;
+                    if (i === currentPage) {
+                        btn.className = "w-10 h-10 flex items-center justify-center rounded bg-primary text-white font-bold shadow cursor-default";
+                    } else {
+                        btn.className = "w-10 h-10 flex items-center justify-center rounded bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 font-bold transition-colors cursor-pointer";
+                    }
+                    
+                    btn.addEventListener('click', () => {
+                        if(i !== currentPage) {
+                            currentPage = i;
+                            renderProducts(currentPage);
+                            renderPagination();
+                            document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
+                        }
+                    });
+                    paginationContainer.appendChild(btn);
+                }
+            }
+
+            function attachCartEvents() {
+                const btns = document.querySelectorAll('.add-to-cart-btn');
+                btns.forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        cartCount++;
+                        cartCountElement.innerText = cartCount;
+                        
+                        const originalText = this.innerText;
+                        this.innerText = 'Đã Thêm ✓';
+                        this.classList.replace('bg-slate-100', 'bg-green-500');
+                        this.classList.replace('text-slate-800', 'text-white');
+
+                        setTimeout(() => {
+                            this.innerText = originalText;
+                            this.classList.replace('bg-green-500', 'bg-slate-100');
+                            this.classList.replace('text-white', 'text-slate-800');
+                        }, 1500);
+                    });
+                });
+            }
+
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 10) {
+                    navbar.classList.add('shadow-md');
+                } else {
+                    navbar.classList.remove('shadow-md');
+                }
+            });
+
+            renderProducts(currentPage);
+            renderPagination();
+        });
+    </script>
 </body>
 </html>
