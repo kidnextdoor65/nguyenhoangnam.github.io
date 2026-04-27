@@ -26,9 +26,9 @@
         html { scroll-padding-top: 80px; }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-900 font-sans antialiased">
+<body class="bg-slate-50 text-slate-900 font-sans antialiased overflow-x-hidden">
 
-    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-white/95 backdrop-blur-md border-b border-slate-200 py-4 px-6 md:px-12 flex justify-between items-center shadow-sm">
+    <nav id="navbar" class="fixed w-full z-40 transition-all duration-300 bg-white/95 backdrop-blur-md border-b border-slate-200 py-4 px-6 md:px-12 flex justify-between items-center shadow-sm">
         <a href="#home" class="text-2xl font-black tracking-wider flex items-center gap-2 text-slate-900">
             <span class="text-primary text-3xl">/</span>AXE
         </a>
@@ -37,8 +37,9 @@
             <a href="#products" class="hover:text-primary transition-colors">Shopping</a>
             <a href="cv.html" class="hover:text-primary transition-colors">Cá nhân (CV)</a>
         </div>
-        <div class="relative group" id="cart-btn">
-            <i class="fa-solid fa-cart-shopping text-xl text-slate-700"></i>
+        
+        <div class="relative group cursor-pointer hover:scale-110 transition-transform" id="cart-btn" onclick="toggleCart()">
+            <i class="fa-solid fa-cart-shopping text-xl text-slate-700 group-hover:text-primary transition-colors"></i>
             <span id="cart-count" class="absolute -top-2 -right-3 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full">0</span>
         </div>
     </nav>
@@ -80,11 +81,61 @@
         </div>
     </footer>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const cartCountElement = document.getElementById('cart-count');
-            let cartCount = 0;
+    <div id="cart-overlay" class="fixed inset-0 bg-slate-900/40 z-50 hidden opacity-0 transition-opacity duration-300 backdrop-blur-sm" onclick="toggleCart()"></div>
 
+    <div id="cart-sidebar" class="fixed top-0 right-0 h-full w-full sm:w-[400px] bg-white z-50 shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col border-l border-slate-200">
+        <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50">
+            <h2 class="text-xl font-black text-slate-800 uppercase tracking-wider">Giỏ hàng</h2>
+            <button onclick="toggleCart()" class="text-slate-400 hover:text-red-500 text-2xl transition-colors">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+        
+        <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-4 bg-white">
+            <div class="text-center text-slate-400 mt-10 text-sm">Giỏ hàng của bạn đang trống</div>
+        </div>
+        
+        <div class="p-6 border-t border-slate-100 bg-slate-50">
+            <div class="flex justify-between items-center mb-6">
+                <span class="font-bold text-slate-600 uppercase text-sm tracking-wider">Tổng tiền:</span>
+                <span id="cart-total" class="font-black text-2xl text-primary">0₫</span>
+            </div>
+            <button onclick="alert('Tính năng thanh toán tĩnh đang được nâng cấp! Vui lòng liên hệ trực tiếp.')" class="w-full bg-primary text-white font-bold uppercase tracking-widest py-4 rounded hover:bg-secondary transition-colors shadow-lg shadow-blue-500/30">
+                Thanh Toán Ngay
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Khởi tạo mảng chứa sản phẩm giỏ hàng toàn cục
+        let cart = [];
+
+        // Khai báo hàm toggleCart ra ngoài Global (Window) để HTML có thể gọi được
+        window.toggleCart = function() {
+            const sidebar = document.getElementById('cart-sidebar');
+            const overlay = document.getElementById('cart-overlay');
+            
+            if (sidebar.classList.contains('translate-x-full')) {
+                // Mở giỏ hàng
+                sidebar.classList.remove('translate-x-full');
+                overlay.classList.remove('hidden');
+                // Timeout nhỏ để đảm bảo hiệu ứng mờ (fade) hoạt động
+                setTimeout(() => overlay.classList.remove('opacity-0'), 10);
+            } else {
+                // Đóng giỏ hàng
+                sidebar.classList.add('translate-x-full');
+                overlay.classList.add('opacity-0');
+                setTimeout(() => overlay.classList.add('hidden'), 300);
+            }
+        };
+
+        // Khai báo hàm Xóa sản phẩm khỏi giỏ hàng
+        window.removeCartItem = function(index) {
+            cart.splice(index, 1); // Xóa phần tử
+            window.updateCartUI(); // Cập nhật lại giao diện
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
             const baseProducts = [
                 { name: "AXE Apollo", price: 95000, img: "https://www.axe.com/content/dam/unilever/axe/vietnam/pack_shot/8934839154687-1215160-png.png", desc: "Hương Gỗ Đàn Hương & Xô Thơm" },
                 { name: "Dark Temptation", price: 95000, img: "https://www.axe.com/content/dam/unilever/axe/vietnam/pack_shot/8934839154724-1215168-png.png", desc: "Hương Sô-cô-la đen ngọt ngào" },
@@ -130,7 +181,7 @@
                         </div>
                         <div>
                             <div class="text-2xl font-black text-primary mb-4">${product.price.toLocaleString('vi-VN')}₫</div>
-                            <button class="add-to-cart-btn w-full bg-slate-100 text-slate-800 font-bold py-3 uppercase rounded hover:bg-primary hover:text-white transition-colors border border-slate-200">
+                            <button data-id="${product.id}" class="add-to-cart-btn w-full bg-slate-100 text-slate-800 font-bold py-3 uppercase rounded hover:bg-primary hover:text-white transition-colors border border-slate-200">
                                 Thêm vào giỏ
                             </button>
                         </div>
@@ -164,13 +215,26 @@
                 }
             }
 
+            // Gắn sự kiện cho các nút Thêm vào giỏ
             function attachCartEvents() {
                 const btns = document.querySelectorAll('.add-to-cart-btn');
                 btns.forEach(btn => {
                     btn.addEventListener('click', function() {
-                        cartCount++;
-                        cartCountElement.innerText = cartCount;
+                        const productId = parseInt(this.getAttribute('data-id'));
+                        const product = products.find(p => p.id === productId);
                         
+                        // Kiểm tra sản phẩm đã có trong giỏ chưa
+                        const existingItem = cart.find(item => item.id === productId);
+                        if (existingItem) {
+                            existingItem.qty += 1;
+                        } else {
+                            cart.push({ ...product, qty: 1 });
+                        }
+
+                        // Cập nhật giao diện
+                        window.updateCartUI();
+                        
+                        // Hiệu ứng nút bấm
                         const originalText = this.innerText;
                         this.innerText = 'Đã Thêm ✓';
                         this.classList.replace('bg-slate-100', 'bg-green-500');
@@ -181,10 +245,53 @@
                             this.classList.replace('bg-green-500', 'bg-slate-100');
                             this.classList.replace('text-white', 'text-slate-800');
                         }, 1500);
+                        
+                        // Tự động mở giỏ hàng khi thêm sản phẩm mới
+                        const sidebar = document.getElementById('cart-sidebar');
+                        if (sidebar.classList.contains('translate-x-full')) {
+                            window.toggleCart();
+                        }
                     });
                 });
             }
 
+            // Cập nhật toàn bộ giao diện Giỏ hàng
+            window.updateCartUI = function() {
+                const cartItemsContainer = document.getElementById('cart-items');
+                const cartTotalEl = document.getElementById('cart-total');
+                const cartCountEl = document.getElementById('cart-count');
+
+                let total = 0;
+                let count = 0;
+                cartItemsContainer.innerHTML = '';
+
+                if (cart.length === 0) {
+                    cartItemsContainer.innerHTML = '<div class="text-center text-slate-400 mt-10 text-sm">Giỏ hàng của bạn đang trống</div>';
+                } else {
+                    cart.forEach((item, index) => {
+                        total += item.price * item.qty;
+                        count += item.qty;
+                        
+                        cartItemsContainer.innerHTML += `
+                            <div class="flex gap-4 items-center bg-white p-3 border border-slate-100 rounded-lg shadow-sm hover:border-slate-300 transition-colors">
+                                <img src="${item.img}" class="w-16 h-16 object-contain">
+                                <div class="flex-1">
+                                    <h4 class="font-bold text-sm text-slate-800 line-clamp-1">${item.name}</h4>
+                                    <div class="text-primary font-bold text-sm mt-1">${item.price.toLocaleString('vi-VN')}₫ <span class="text-slate-400 text-xs font-normal">x ${item.qty}</span></div>
+                                </div>
+                                <button onclick="window.removeCartItem(${index})" class="text-slate-300 hover:text-red-500 p-2 transition-colors">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </div>
+                        `;
+                    });
+                }
+
+                cartCountEl.innerText = count;
+                cartTotalEl.innerText = total.toLocaleString('vi-VN') + '₫';
+            };
+
+            // Navbar Sticky Effect
             const navbar = document.getElementById('navbar');
             window.addEventListener('scroll', () => {
                 if (window.scrollY > 10) {
@@ -194,6 +301,7 @@
                 }
             });
 
+            // Khởi tạo
             renderProducts(currentPage);
             renderPagination();
         });
