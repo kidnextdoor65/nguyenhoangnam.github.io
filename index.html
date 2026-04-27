@@ -3,45 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nguyễn Hoàng Nam - Portfolio</title>
+    <title>Nguyễn Hoàng Nam - Portfolio & CV</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f4f4f9;
-            color: #333;
-        }
-        .container {
-            text-align: center;
-            padding: 40px;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-        h1 { color: #2c3e50; margin-bottom: 10px; }
-        p { font-size: 1.1em; color: #555; line-height: 1.6; }
-        .badge {
-            display: inline-block;
-            background-color: #3498db;
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.9em;
-            margin-top: 15px;
-        }
+        :root { --primary: #0f172a; --secondary: #3b82f6; --text: #334155; --bg: #f1f5f9; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: var(--text); background: var(--bg); margin: 0; padding: 20px; }
+        .container { max-width: 950px; margin: 0 auto; background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+        .header { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 3px solid var(--secondary); padding-bottom: 20px; margin-bottom: 30px; }
+        .header-left h1 { margin: 0; color: var(--primary); font-size: 2.8em; text-transform: uppercase; letter-spacing: 1px; }
+        .header-left p { font-size: 1.2em; color: var(--secondary); font-weight: bold; margin: 5px 0 0 0; }
+        .header-right { text-align: right; font-size: 0.95em; }
+        h2 { border-left: 4px solid var(--secondary); padding-left: 12px; color: var(--primary); margin-top: 35px; text-transform: uppercase; font-size: 1.3em; letter-spacing: 0.5px; }
+        .grid-2-col { display: grid; grid-template-columns: 2fr 1fr; gap: 40px; }
+        .item { margin-bottom: 25px; }
+        .item-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 5px; }
+        .item-title { font-weight: 700; font-size: 1.1em; color: var(--primary); }
+        .item-date { color: #64748b; font-size: 0.9em; font-weight: 600; }
+        .item-subtitle { color: var(--secondary); font-style: italic; font-size: 0.95em; margin-bottom: 10px; }
+        ul { padding-left: 18px; margin-top: 5px; }
+        li { margin-bottom: 6px; text-align: justify; }
+        .tag-container { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+        .tag { background: #e2e8f0; color: var(--primary); padding: 5px 12px; border-radius: 20px; font-size: 0.85em; font-weight: 600; }
+        .hobby-list p { margin: 5px 0; font-size: 0.95em; }
+        @media (max-width: 768px) { .grid-2-col { grid-template-columns: 1fr; } .header { flex-direction: column; align-items: flex-start; gap: 15px; } .header-right { text-align: left; } }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Hello World! 👋</h1>
-        <p>Chào mừng đến với không gian trực tuyến của Nguyễn Hoàng Nam.</p>
-        <p>Trang web này đang được khởi chạy thành công trên GitHub Pages.</p>
-        <div class="badge">Đang phát triển CV...</div>
+        <div class="header">
+            <div class="header-left">
+                <h1>Nguyễn Hoàng Nam</h1>
+                <p>Quản lý Vận hành & Phân tích Kinh doanh</p>
+            </div>
+            <div class="header-right">
+                <div>📍 Đà Nẵng, Việt Nam</div>
+                <div>📧 email.cua.ban@gmail.com</div>
+                <div>📱 +84 123 456 789</div>
+            </div>
+        </div>
+
+        <div class="grid-2-col">
+            <div class="main-col">
+                <h2>Kinh nghiệm làm việc</h2>
+                
+                <div class="item">
+                    <div class="item-header">
+                        <span class="item-title">Quản lý Vận hành Khách sạn</span>
+                        <span class="item-date">2023 – Hiện tại</span>
+                    </div>
+                    <div class="item-subtitle">Đà Nẵng, Việt Nam</div>
+                    <ul>
+                        <li>Chịu trách nhiệm quản lý toàn bộ hoạt động vận hành hàng ngày, đảm bảo chất lượng dịch vụ và trải nghiệm lưu trú.</li>
+                        <li>Tối ưu hóa doanh thu và tỷ lệ lấp phòng trên các nền tảng OTA lớn (Agoda, Booking.com, Traveloka).</li>
+                        <li>Theo dõi biến động thị trường du lịch Đà Nẵng để điều chỉnh chiến lược giá linh hoạt.</li>
+                        <li>Xử lý các tình huống phát sinh, đào tạo và giám sát đội ngũ nhân sự.</li>
+                    </ul>
+                </div>
+
+                <div class="item">
+                    <div class="item-header">
+                        <span class="item-title">Đầu tư & Phân tích thị trường Web3</span>
+                        <span class="item-date">2022 – Hiện tại</span>
+                    </div>
+                    <div class="item-subtitle">Làm việc tự do</div>
+                    <ul>
+                        <li>Nghiên cứu nền tảng công nghệ, phân tích dữ liệu on-chain và giao dịch (Trading) tài sản số.</li>
+                        <li>Trải nghiệm sớm các hệ sinh thái (Testnet/Mainnet) để khai thác nguồn doanh thu từ các chiến dịch Airdrop.</li>
+                        <li>Thiết lập kỷ luật quản lý vốn và kiểm soát rủi ro trong thị trường có biên độ giao động lớn.</li>
+                    </ul>
+                </div>
+
+                <div class="item">
+                    <div class="item-header">
+                        <span class="item-title">Kinh doanh Sản phẩm Digital & Quản lý Cửa hàng Sỉ</span>
+                        <span class="item-date">2019 – 2023</span>
+                    </div>
+                    <div class="item-subtitle">Thị trường Nga & Toàn cầu</div>
+                    <ul>
+                        <li>Xây dựng và quản lý mô hình kinh doanh sản phẩm digital (PSN, Xbox, Steam) và tối ưu hóa cổng thanh toán quốc tế.</li>
+                        <li>Điều hành hoạt động bán buôn hàng may mặc tại Nga; quản lý chuỗi cung ứng và đàm phán trực tiếp với xưởng may.</li>
+                    </ul>
+                </div>
+
+                <h2>Học vấn & Nghiên cứu</h2>
+                <div class="item">
+                    <div class="item-header">
+                        <span class="item-title">Cử nhân Quản trị Kinh doanh</span>
+                        <span class="item-date">2023 – Hiện tại</span>
+                    </div>
+                    <div class="item-subtitle">Đại học Duy Tân</div>
+                    <p>Dự án: Nghiên cứu chuyên sâu về "Tác động của hội chứng FOMO đến quyết định nâng cấp thiết bị công nghệ của thế hệ Gen Z tại Việt Nam".</p>
+                </div>
+                <div class="item">
+                    <div class="item-header">
+                        <span class="item-title">Cử nhân Công nghệ Thông tin (IT)</span>
+                        <span class="item-date">2019 – 2023</span>
+                    </div>
+                    <div class="item-subtitle">Đại học Hữu nghị các Dân tộc Nga (RUDN University)</div>
+                </div>
+            </div>
+
+            <div class="side-col">
+                <h2>Kỹ năng & Ngoại ngữ</h2>
+                <div class="item">
+                    <div class="item-title">Ngoại ngữ</div>
+                    <p>🇷🇺 Tiếng Nga: Bản xứ (Chứng chỉ TRKI B1)<br>🇬🇧 Tiếng Anh: Thành thạo</p>
+                </div>
+                <div class="item">
+                    <div class="item-title">Chuyên môn</div>
+                    <div class="tag-container">
+                        <span class="tag">Quản trị OTA</span>
+                        <span class="tag">Phân tích dữ liệu</span>
+                        <span class="tag">Logistics & Supply Chain</span>
+                        <span class="tag">Thương mại điện tử</span>
+                        <span class="tag">Microsoft Office (MOS)</span>
+                    </div>
+                </div>
+                
+                <h2>Sở thích & Đam mê</h2>
+                <div class="hobby-list">
+                    <p>♟️ <b>Cờ vua:</b> Rèn luyện tư duy logic, nghiên cứu chiến thuật khai cuộc (Mục tiêu 1500 Elo).</p>
+                    <p>💻 <b>Công nghệ:</b> Cập nhật kiến thức phần cứng máy tính, lắp ráp và tối ưu hóa hiệu năng PC.</p>
+                    <p>🎮 <b>Giải trí:</b> Phân tích cơ chế tự động hóa và quản lý tài nguyên qua các tựa game chiến thuật (Factorio, Civ VI).</p>
+                    <p>🏋️ <b>Thể hình:</b> Duy trì kỷ luật qua các bài tập kháng lực và tối ưu dinh dưỡng phát triển cơ bắp.</p>
+                    <p>📈 <b>Kinh tế vĩ mô:</b> Tìm hiểu về hệ thống kinh tế toàn cầu và dòng chảy thương mại.</p>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>
