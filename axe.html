@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AXE Vietnam | Khẳng Định Bản Lĩnh Phái Mạnh</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --axe-neon: #ccff00; /* Màu xanh neon đặc trưng của nhãn hàng */
+            --dark-bg: #0a0a0a;
+            --card-bg: #151515;
+            --text-main: #ffffff;
+            --text-muted: #a0a0a0;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; scroll-behavior: smooth; }
+        body { background-color: var(--dark-bg); color: var(--text-main); }
+
+        /* Navbar - Thanh điều hướng cố định */
+        nav {
+            position: fixed; top: 0; width: 100%; background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px); z-index: 1000; border-bottom: 1px solid #333;
+            display: flex; justify-content: space-between; align-items: center; padding: 15px 50px;
+        }
+        .nav-links a { color: #fff; text-decoration: none; margin: 0 15px; font-weight: 700; text-transform: uppercase; font-size: 0.9em; transition: 0.3s; }
+        .nav-links a:hover { color: var(--axe-neon); }
+        .cart-icon { font-size: 1.5em; cursor: pointer; position: relative; }
+        .cart-count {
+            position: absolute; top: -5px; right: -10px; background: var(--axe-neon); color: #000;
+            font-size: 0.6em; font-weight: 900; padding: 2px 6px; border-radius: 50%;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3), var(--dark-bg)), url('https://images.unsplash.com/photo-1618331835717-801e976710b2?q=80&w=1920&auto=format&fit=crop') center/cover;
+            padding: 0 20px; margin-top: 60px;
+        }
+        .hero-content { max-width: 800px; animation: fadeIn 1.5s ease-in-out; }
+        .hero h1 { font-size: 4em; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; line-height: 1.1; }
+        .hero h1 span { color: var(--axe-neon); }
+        .hero p { font-size: 1.2em; color: #ddd; margin-bottom: 30px; }
+        .btn {
+            display: inline-block; padding: 15px 40px; background: var(--axe-neon); color: #000;
+            font-size: 1.1em; font-weight: 900; text-decoration: none; text-transform: uppercase;
+            border-radius: 4px; transition: all 0.3s ease; border: 2px solid var(--axe-neon); cursor: pointer;
+        }
+        .btn:hover { background: transparent; color: var(--axe-neon); box-shadow: 0 0 20px rgba(204, 255, 0, 0.4); }
+
+        /* Trust Badges / USP Section */
+        .usp-section { display: flex; justify-content: center; gap: 50px; padding: 50px 20px; background: #0f0f0f; flex-wrap: wrap; text-align: center; border-bottom: 1px solid #222;}
+        .usp-item { max-width: 250px; }
+        .usp-icon { font-size: 2.5em; margin-bottom: 15px; display: block; }
+        .usp-item h3 { color: var(--axe-neon); font-size: 1.1em; margin-bottom: 10px; }
+        .usp-item p { color: var(--text-muted); font-size: 0.9em; line-height: 1.5; }
+
+        /* Product Grid */
+        .products { padding: 80px 20px; max-width: 1200px; margin: 0 auto; text-align: center; }
+        .section-title { font-size: 2.5em; font-weight: 900; margin-bottom: 50px; text-transform: uppercase; }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
+        
+        .card {
+            background: var(--card-bg); padding: 30px 20px; border-radius: 8px; position: relative;
+            border: 1px solid #222; transition: transform 0.3s, box-shadow 0.3s; overflow: hidden;
+        }
+        .card:hover { transform: translateY(-10px); border-color: var(--axe-neon); box-shadow: 0 10px 30px rgba(204, 255, 0, 0.1); }
+        .badge-best {
+            position: absolute; top: 15px; right: -30px; background: var(--axe-neon); color: #000;
+            font-weight: 900; font-size: 0.8em; padding: 5px 40px; transform: rotate(45deg); text-transform: uppercase;
+        }
+        .card img { width: 140px; height: 180px; object-fit: contain; margin-bottom: 20px; transition: transform 0.5s; }
+        .card:hover img { transform: scale(1.1); }
+        .card h3 { font-size: 1.5em; margin-bottom: 10px; }
+        .stars { color: #FFD700; font-size: 1em; margin-bottom: 10px; }
+        .price { font-size: 1.8em; font-weight: 900; color: var(--axe-neon); margin: 15px 0; }
+        .btn-add { width: 100%; border: none; }
+
+        /* Social Proof / Reviews */
+        .reviews { background: #0f0f0f; padding: 80px 20px; text-align: center; }
+        .review-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; max-width: 1000px; margin: 0 auto; }
+        .review-card { background: var(--card-bg); padding: 25px; border-radius: 8px; text-align: left; border: 1px solid #222; }
+        .review-card p { font-style: italic; color: var(--text-muted); margin-bottom: 15px; }
+        .reviewer { font-weight: bold; color: var(--axe-neon); }
+
+        /* Footer */
+        footer { background: #050505; padding: 40px 20px; text-align: center; border-top: 1px solid #222; }
+        .footer-links { margin-bottom: 20px; }
+        .footer-links a { color: var(--text-muted); margin: 0 10px; text-decoration: none; font-size: 0.9em; }
+        .footer-links a:hover { color: #fff; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @media (max-width: 768px) { nav { padding: 15px 20px; } .hero h1 { font-size: 2.5em; } .nav-links { display: none; } }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b3/Axe_logo.svg" alt="AXE Logo" width="60">
+        <div class="nav-links">
+            <a href="#home">Trang chủ</a>
+            <a href="#products">Sản phẩm</a>
+            <a href="#reviews">Đánh giá</a>
+        </div>
+        <div class="cart-icon">
+            🛒<span class="cart-count" id="cart-counter">0</span>
+        </div>
+    </nav>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>SẠCH THƠM <span>48 GIỜ</span><br>BẬT KHÍ CHẤT NAM TÍNH</h1>
+            <p>Công nghệ Zinc Neodecanoate tiên tiến. Không để lại vệt trắng. Tự tin chinh phục mọi thử thách với hương nước hoa đẳng cấp thế giới.</p>
+            <a href="#products" class="btn">KHÁM PHÁ NGAY</a>
+        </div>
+    </section>
+
+    <section class="usp-section">
+        <div class="usp-item">
+            <span class="usp-icon">⏱️</span>
+            <h3>BẢO VỆ 48 GIỜ</h3>
+            <p>Ngăn mùi cơ thể vượt trội, giúp bạn luôn sảng khoái suốt ngày dài năng động.</p>
+        </div>
+        <div class="usp-item">
+            <span class="usp-icon">💎</span>
+            <h3>HƯƠNG NƯỚC HOA</h3>
+            <p>Được tinh chế bởi các chuyên gia điều hương hàng đầu thế giới.</p>
+        </div>
+        <div class="usp-item">
+            <span class="usp-icon">👕</span>
+            <h3>SẠCH SẼ & KHÔ THOÁNG</h3>
+            <p>Công thức cải tiến không gây ố vàng hay để lại vệt trắng trên áo.</p>
+        </div>
+    </section>
+
+    <section class="products" id="products">
+        <h2 class="section-title">BỘ SƯU TẬP BÁN CHẠY</h2>
+        <div class="product-grid">
+            
+            <div class="card">
+                <img src="https://www.axe.com/content/dam/unilever/axe/vietnam/pack_shot/8934839154687-1215160-png.png" alt="AXE Apollo">
+                <h3>AXE Apollo</h3>
+                <div class="stars">★★★★★ <span style="color:#777; font-size:0.8em;">(342)</span></div>
+                <p style="color: var(--text-muted); font-size: 0.9em;">Hương Gỗ Đàn Hương & Xô Thơm</p>
+                <div class="price">95.000₫</div>
+                <button class="btn btn-add" onclick="addToCart(this)">THÊM VÀO GIỎ</button>
+            </div>
+
+            <div class="card">
+                <div class="badge-best">HOT</div>
+                <img src="https://www.axe.com/content/dam/unilever/axe/vietnam/pack_shot/8934839154724-1215168-png.png" alt="AXE Dark Temptation">
+                <h3>Dark Temptation</h3>
+                <div class="stars">★★★★★ <span style="color:#777; font-size:0.8em;">(890)</span></div>
+                <p style="color: var(--text-muted); font-size: 0.9em;">Hương Sô-cô-la Đen Quyến Rũ</p>
+                <div class="price">95.000₫</div>
+                <button class="btn btn-add" onclick="addToCart(this)">THÊM VÀO GIỎ</button>
+            </div>
+
+            <div class="card">
+                <img src="https://www.axe.com/content/dam/unilever/axe/vietnam/pack_shot/8934839154700-1215164-png.png" alt="AXE Black">
+                <h3>AXE Black</h3>
+                <div class="stars">★★★★☆ <span style="color:#777; font-size:0.8em;">(215)</span></div>
+                <p style="color: var(--text-muted); font-size: 0.9em;">Hương Cam Bergamot & Tuyết Tùng</p>
+                <div class="price">95.000₫</div>
+                <button class="btn btn-add" onclick="addToCart(this)">THÊM VÀO GIỎ</button>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="reviews" id="reviews">
+        <h2 class="section-title">KHÁCH HÀNG NÓI GÌ?</h2>
+        <div class="review-grid">
+            <div class="review-card">
+                <div class="stars">★★★★★</div>
+                <p>"Mùi Dark Temptation thực sự cuốn hút. Mình xịt từ sáng đi làm đến lúc tập gym xong buổi tối vẫn còn thoang thoảng mùi hương."</p>
+                <span class="reviewer">- Minh Tuấn</span>
+            </div>
+            <div class="review-card">
+                <div class="stars">★★★★★</div>
+                <p>"Rất thích dòng Apollo. Mùi nam tính, mát mẻ, đặc biệt là không hề làm ố vàng nách áo sơ mi trắng của mình."</p>
+                <span class="reviewer">- Hoàng Bách</span>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-links">
+            <a href="#">Chính sách Đổi trả</a>
+            <a href="#">Bảo mật Thông tin</a>
+            <a href="#">Liên hệ CSKH</a>
+        </div>
+        <p style="color: #666; font-size: 0.8em;">&copy; 2026 AXE Vietnam. Phân phối chính hãng. Designed by Nguyễn Hoàng Nam.</p>
+    </footer>
+
+    <script>
+        let cartCount = 0;
+        function addToCart(button) {
+            // Tăng số lượng giỏ hàng
+            cartCount++;
+            document.getElementById('cart-counter').innerText = cartCount;
+            
+            // Đổi trạng thái nút
+            let originalText = button.innerText;
+            button.innerText = "✓ ĐÃ THÊM";
+            button.style.background = "#fff";
+            button.style.color = "#000";
+            
+            // Trả lại trạng thái cũ sau 2 giây
+            setTimeout(() => {
+                button.innerText = originalText;
+                button.style.background = "var(--axe-neon)";
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
